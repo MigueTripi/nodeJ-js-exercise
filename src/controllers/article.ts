@@ -1,10 +1,11 @@
-const Mongoose = require('mongoose');
-const ArticleService = require('../services/article');
-const ControllerHelper = require('./helper/controllerHelper');
+import mongoose from 'mongoose';
+import ArticleService from '../services/article';
+import ControllerHelper from './helper/controllerHelper';
+import { Request, Response } from "express";
 
 class ArticleController {
     
-    static async fetch(req, res){
+    static async fetch(req: Request, res: Response, next: Function){
         try {
             res.send(await ArticleService.fetch());
         } catch (error) {
@@ -13,12 +14,12 @@ class ArticleController {
         }
     }
 
-    static async find(req, res){
+    static async find(req: Request, res: Response, next: Function){
         try {
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).send('id is not valid');
             }
-            var result = await ArticleService.find(Mongoose.Types.ObjectId(req.params.id));
+            var result = await ArticleService.find(new mongoose.Types.ObjectId(req.params.id));
             if(!result){
                 return res.status(404).send('Article not found');
             }
@@ -31,7 +32,7 @@ class ArticleController {
         }
     }
 
-    static async update(req, res){
+    static async update(req: Request, res: Response, next: Function){
         try {
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).send('id is not valid');
@@ -44,16 +45,16 @@ class ArticleController {
         }
     }
 
-    static async create(req, res){
+    static async create(req: Request, res: Response, next: Function){
         res.status(201).send(await ArticleService.create(req.body.article));
     }
 
-    static async delete(req, res){
+    static async delete(req: Request, res: Response, next: Function){
         try {
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).send('id is not valid');
             }
-            res.send(await ArticleService.delete(req.params.id));            
+            res.send(await ArticleService.delete(new mongoose.Types.ObjectId(req.params.id)));            
         } catch (error) {
             console.log(error);
             throw error;
@@ -61,4 +62,4 @@ class ArticleController {
     }
 }
 
-module.exports = ArticleController;
+export default ArticleController;

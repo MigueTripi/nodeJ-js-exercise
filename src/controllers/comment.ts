@@ -1,16 +1,17 @@
-const Mongoose = require('mongoose');
-const CommentService = require('../services/comment');
-const ControllerHelper = require('./helper/controllerHelper');
+import {Types} from 'mongoose';
+import CommentService from '../services/comment';
+import ControllerHelper from './helper/controllerHelper';
+import { Request, Response } from "express";
 
 class CommentController{
     
-    static async fetch(req, res, next){
+    static async fetch(req: Request, res: Response, next: Function){
         try {
             if (!ControllerHelper.isValidId(req.params.article)){
                 return res.status(400).send('article is not valid');
             }
 
-            var result = await CommentService.findByArticleId(Mongoose.Types.ObjectId(req.params.article));
+            var result = await CommentService.findByArticleId(new Types.ObjectId(req.params.article));
             if(!result || result.length == 0){
                 return res.status(404).send('Related comments not found');
             }
@@ -22,12 +23,12 @@ class CommentController{
         }
     }
 
-    static async find(req, res){
+    static async find(req: Request, res: Response, next: Function){
         try {
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).send('id is not valid');
             }
-            var result = await CommentService.find(Mongoose.Types.ObjectId(req.params.id));
+            var result = await CommentService.find(new Types.ObjectId(req.params.id));
             if(!result){
                 return res.status(404).send('Comment not found');
             }
@@ -40,12 +41,12 @@ class CommentController{
         }
     }
 
-    static async update(req, res){
+    static async update(req: Request, res: Response, next: Function){
         try {
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).send('id is not valid');
             }
-            res.send(await CommentService.update(req.params.id, req.body.comment));
+            res.send(await CommentService.update(new Types.ObjectId(req.params.id), req.body.comment));
             
         } catch (error) {
             console.log(error);
@@ -53,7 +54,7 @@ class CommentController{
         }
     }
 
-    static async create(req, res){
+    static async create(req: Request, res: Response, next: Function){
         try {
             res.status(201).send(await CommentService.create(req.body.comment));
             
@@ -63,12 +64,12 @@ class CommentController{
         }
     }
 
-    static async delete(req, res){
+    static async delete(req: Request, res: Response, next: Function){
         try {
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).send('id is not valid');
             }
-            res.send(await CommentService.delete(req.params.id));
+            res.send(await CommentService.delete(new Types.ObjectId(req.params.id)));
             
         } catch (error) {
             console.log(error);
@@ -77,4 +78,4 @@ class CommentController{
     }
 }
 
-module.exports = CommentController;
+export default CommentController;
