@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "cc48a0ac-e2a5-4aa9-8b3e-a6512a5fa978",
+		"name": "Cloud(X)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5113328"
+	},
+	"item": [
+		{
+			"name": "NodeJSTrainning",
+			"item": [
+				{
+					"name": "comments",
+					"item": [
+						{
+							"name": "GetComments",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "CreateComment",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateComment",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteComment",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "articles",
+					"item": [
+						{
+							"name": "GetArticles",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "GetArticleById",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "CreateArticle",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateArticle",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteArticle",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
