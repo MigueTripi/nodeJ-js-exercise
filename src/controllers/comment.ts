@@ -56,6 +56,9 @@ class CommentController{
 
     static async create(req: Request, res: Response, next: Function){
         try {
+            if (!ControllerHelper.isValidId(req.body.comment.articleId)){
+                return res.status(400).json('id is not valid');
+            }
             res.status(201).json(await CommentService.create(req.body.comment));
             
         } catch (error) {

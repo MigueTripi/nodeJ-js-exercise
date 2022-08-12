@@ -81,37 +81,125 @@ describe('CommentController', () => {
         expect(res.statusCode).to.equal(404);    
     });
     
-    it.skip('CommentsUpdate - OK', async function() {
-        const comment = <IComment>{
-            author: 'author',
-            body: 'body'
-        };
-
+    it('UpdateComment - OK', async function() {
+        
         var req = mocks.createRequest();
         var res = mocks.createResponse();
         var next = () => {};
-        req._setParameter('id','62f165797d3272395398efe7')
         
-        // sinon.stub(CommentService, 'update').resolves((id: string, newArticle: any) => {
-        //     comment = newArticle;
-        //     return comment;
-        // });        
-
-        // sinon.stub(CommentService, "update").callsFake((id: string, newArticle: any) => {
-        //     comment = newArticle;
-        //     return comment;
-        // });
-
-        var spySend = sinon.spy(res, 'json');
-    
-        await CommentController.find(req, res, next);
-    
-        // console.log("DEBUG - ", spySend.callCount);
-        // console.log("DEBUG - ", body);
+        const comment = <IComment>{
+            author: 'author',
+            body: 'body',
+            articleId: new mongoose.Types.ObjectId('123165797d32723953989999')
+        };
+        
+        req._setParameter('id','123165797d32723953989999');
+        req._addBody("comment", comment);
+        sinon.stub(CommentService, 'update').resolves(<any>comment);
+        var spyJson = sinon.spy(res, 'json');
+        
+        await CommentController.update(req, res, next);
+        
         var body = res._getJSONData();
-        expect(spySend.callCount).to.be.equals(1);
-        expect(res.statusCode).to.equal(200);
-        expect(body._id).to.equal('62f165797d3272395398efe7');
+
+        expect(spyJson.calledWith(comment)).to.be.true;
+        expect(JSON.stringify(body)).to.be.equals(JSON.stringify(comment));
     
     });
+
+    it('UpdateComment - bad request', async function() {
+        
+        var req = mocks.createRequest();
+        var res = mocks.createResponse();
+        var next = () => {};
+        
+        const comment = <IComment>{
+            author: 'author',
+            body: 'body',
+            articleId: new mongoose.Types.ObjectId('123165797d32723953989999')
+        };
+        
+        req._setParameter('id','qwewe');
+        req._addBody("comment", comment);
+        sinon.stub(CommentService, 'update').resolves(<any>comment);
+        
+        await CommentController.update(req, res, next);
+        
+        expect(res.statusCode).to.equal(400);
+    });
+
+    it('DeleteComment - OK', async function() {
+        
+        var req = mocks.createRequest();
+        var res = mocks.createResponse();
+        var next = () => {};
+        
+        const comment = <IComment>{
+            author: 'author',
+            body: 'body',
+            articleId: new mongoose.Types.ObjectId('123165797d32723953989999')
+        };
+        
+        req._setParameter('id','123165797d32723953989999');
+        req._addBody("comment", comment);
+        sinon.stub(CommentService, 'delete').resolves(<any>comment);
+        var spyJson = sinon.spy(res, 'json');
+        
+        await CommentController.delete(req, res, next);
+        
+        var body = res._getJSONData();
+
+        expect(spyJson.calledWith(comment)).to.be.true;
+        expect(JSON.stringify(body)).to.be.equals(JSON.stringify(comment));
+    
+    });
+
+    it('DeleteComment - bad request', async function() {
+        
+        var req = mocks.createRequest();
+        var res = mocks.createResponse();
+        var next = () => {};
+        
+        const comment = <IComment>{
+            author: 'author',
+            body: 'body',
+            articleId: new mongoose.Types.ObjectId('123165797d32723953989999')
+        };
+        
+        req._setParameter('id','qwewe');
+        req._addBody("comment", comment);
+        sinon.stub(CommentService, 'delete').resolves(<any>comment);
+        
+        await CommentController.delete(req, res, next);
+        
+        expect(res.statusCode).to.equal(400);
+    });
+
+    it('CreateComment - OK', async function() {
+        
+        var req = mocks.createRequest();
+        var res = mocks.createResponse();
+        var next = () => {};
+        
+        const comment = <IComment>{
+            author: 'author',
+            body: 'body',
+            articleId: new mongoose.Types.ObjectId('123165797d32723953989999')
+        };
+        
+        req._setParameter('id','123165797d32723953989999')
+        req._addBody("comment", comment);
+        sinon.stub(CommentService, 'create').resolves(<any>comment);
+        var spyJson = sinon.spy(res, 'json');
+        
+        await CommentController.create(req, res, next);
+        
+        var body = res._getJSONData();
+
+        expect(spyJson.calledWith(comment)).to.be.true;
+        expect(res.statusCode).to.equal(201);
+        expect(JSON.stringify(body)).to.be.equals(JSON.stringify(comment));
+    
+    });
+
 });
