@@ -24,9 +24,6 @@ describe('CommentController', () => {
 
         await CommentController.fetch(req, res, next);
 
-        //var body = res._getJSONData();
-        console.log("DEBUG - ", spySend.callCount);
-        // console.log("DEBUG - ", body);
         expect(res.statusCode).to.equal(404);
     
     });

@@ -8,8 +8,8 @@ class ArticleService {
         return Article.find({}).lean().exec();
     }
 
-    static find(id: Types.ObjectId){
-        return Article.findOne({"_id": id});
+    static find(id: Types.ObjectId): Promise<IArticle | null>{
+        return Article.findOne({"_id": id}).lean().exec();
     }
 
     static create(article: IArticle){

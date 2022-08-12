@@ -22,9 +22,6 @@ describe('ArticleController', () => {
 
         await ArticleController.fetch(req, res, next);
 
-        //var body = res._getJSONData();
-        console.log("DEBUG - ", spySend.callCount);
-        // console.log("DEBUG - ", body);
         expect(spySend.calledWith([])).to.be.true;
     
     });
@@ -97,8 +94,6 @@ describe('ArticleController', () => {
     
         await ArticleController.find(req, res, next);
     
-        // console.log("DEBUG - ", spySend.callCount);
-        // console.log("DEBUG - ", body);
         var body = res._getJSONData();
         expect(spySend.callCount).to.be.equals(1);
         expect(res.statusCode).to.equal(200);
