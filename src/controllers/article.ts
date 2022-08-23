@@ -20,7 +20,7 @@ class ArticleController {
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
-            var result = await ArticleService.find(new mongoose.Types.ObjectId(req.params.id));
+            const result = await ArticleService.find(new mongoose.Types.ObjectId(req.params.id));
             if(!result){
                 return res.status(404).json('Article not found');
             }

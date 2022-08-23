@@ -13,12 +13,12 @@ describe('ArticleController', () => {
     });    
     
     it('GetArticles - WithoutArticles', async function() {
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         sinon.stub(ArticleService, 'fetch').resolves([]);
-        var spySend = sinon.spy(res, 'json');
+        const spySend = sinon.spy(res, 'json');
 
         await ArticleController.fetch(req, res, next);
 
@@ -32,16 +32,16 @@ describe('ArticleController', () => {
             body: 'body',
             title: 'title'
         };
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         sinon.stub(ArticleService, 'fetch').resolves([<any>article]);
-        var spySend = sinon.spy(res, 'json');
+        const spySend = sinon.spy(res, 'json');
         
         await ArticleController.fetch(req, res, next);
         
-        var body = res._getJSONData();
+        const body = res._getJSONData();
         expect(spySend.calledWith([article])).to.be.true;
         expect(body.length).to.be.equals(1);
         
@@ -49,9 +49,9 @@ describe('ArticleController', () => {
 
     it('GetArticleById - bad request', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         req._setParameter('id','sdf')
         ArticleController.find(req, res, next);
@@ -61,13 +61,13 @@ describe('ArticleController', () => {
     
     it('GetArticleById - not found', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         req._setParameter('id','123165797d3272395398efe7')
         
         sinon.stub(ArticleService, 'find').resolves(null);        
-        var spySend = sinon.spy(res, 'json');
+        const spySend = sinon.spy(res, 'json');
     
         await ArticleController.find(req, res, next);
     
@@ -84,17 +84,17 @@ describe('ArticleController', () => {
             title: 'title'
         };
     
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         req._setParameter('id','62f165797d3272395398efe7')
         
         sinon.stub(ArticleService, 'find').resolves(<any>article);        
-        var spySend = sinon.spy(res, 'json');
+        const spySend = sinon.spy(res, 'json');
     
         await ArticleController.find(req, res, next);
     
-        var body = res._getJSONData();
+        const body = res._getJSONData();
         expect(spySend.callCount).to.be.equals(1);
         expect(res.statusCode).to.equal(200);
         expect(body._id).to.equal('62f165797d3272395398efe7');
@@ -103,11 +103,11 @@ describe('ArticleController', () => {
     
     it('UpdateArticle - OK', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
-        var article = <IArticle>{
+        const article = <IArticle>{
             _id: '62f165797d3272395398efe7',
             author: 'author',
             body: 'body',
@@ -116,12 +116,12 @@ describe('ArticleController', () => {
         
         req._setParameter('id','62f165797d3272395398efe7');
         req._addBody("article", article);
-        var spyJson = sinon.spy(res, 'json');
+        const spyJson = sinon.spy(res, 'json');
         sinon.stub(ArticleService, 'update').resolves(<any>article);
     
         await ArticleController.update(req, res, next);
     
-        var body = res._getJSONData();
+        const body = res._getJSONData();
         expect(spyJson.calledWith(article)).to.be.true;
         expect(JSON.stringify(body)).to.be.equals(JSON.stringify(article));
     
@@ -129,11 +129,11 @@ describe('ArticleController', () => {
 
     it('UpdateArticle - bad request', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
-        var article = <IArticle>{
+        const article = <IArticle>{
             _id: '62f165797d3272395398efe7',
             author: 'author',
             body: 'body',
@@ -150,11 +150,11 @@ describe('ArticleController', () => {
 
     it('DeleteArticle - OK', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
-        var article = <IArticle>{
+        const article = <IArticle>{
             _id: '62f165797d3272395398efe7',
             author: 'author',
             body: 'body',
@@ -163,12 +163,12 @@ describe('ArticleController', () => {
         
         req._setParameter('id','62f165797d3272395398efe7');
         req._addBody("article", article);
-        var spyJson = sinon.spy(res, 'json');
+        const spyJson = sinon.spy(res, 'json');
         sinon.stub(ArticleService, 'delete').resolves(<any>article);
     
         await ArticleController.delete(req, res, next);
     
-        var body = res._getJSONData();
+        const body = res._getJSONData();
         expect(spyJson.calledWith(article)).to.be.true;
         expect(JSON.stringify(body)).to.be.equals(JSON.stringify(article));
     
@@ -176,11 +176,11 @@ describe('ArticleController', () => {
 
     it('DeleteArticle - bad request', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
-        var article = <IArticle>{
+        const article = <IArticle>{
             _id: '62f165797d3272395398efe7',
             author: 'author',
             body: 'body',
@@ -198,11 +198,11 @@ describe('ArticleController', () => {
 
     it('CreateArticle - OK', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
-        var article = <IArticle>{
+        const article = <IArticle>{
             _id: '62f165797d3272395398efe7',
             author: 'author',
             body: 'body',
@@ -211,13 +211,13 @@ describe('ArticleController', () => {
         
         req._setParameter('id','62f165797d3272395398efe7');
         req._addBody("article", article);
-        var spyJson = sinon.spy(res, 'json');
+        const spyJson = sinon.spy(res, 'json');
         sinon.stub(ArticleService, 'create').resolves(<any>article);
     
         await ArticleController.create(req, res, next);
     
         
-        var body = res._getJSONData();
+        const body = res._getJSONData();
 
         expect(spyJson.calledWith(article)).to.be.true;
         expect(res.statusCode).to.equal(201);

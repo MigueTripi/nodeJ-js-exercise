@@ -32,14 +32,14 @@ describe('ArticleService', () => {
     
     it('GetArticles - WithoutArticles', async function() {
         
-        var result = await ArticleService.fetch();
+        const result = await ArticleService.fetch();
         expect(result.length).to.be.equals(0);
     
     });
 
     it('CreateArticle - OK', async function() {
         
-        var result = await ArticleService.create(article);
+        const result = await ArticleService.create(article);
 
         expect(result.title).to.be.equals(article.title);
         expect(result.author).to.be.equals(article.author);
@@ -49,8 +49,8 @@ describe('ArticleService', () => {
 
     it('CreateArticle - and retrieve created', async function() {
         
-        let created: any = await ArticleService.create(article);
-        var retrieved: any = await ArticleService.find(created._id);
+        const created: any = await ArticleService.create(article);
+        const retrieved: any = await ArticleService.find(created._id);
 
         expect(created.title).to.be.equals(retrieved?.title);
         expect(created.author).to.be.equals(retrieved?.author);
@@ -61,20 +61,20 @@ describe('ArticleService', () => {
     it('CreateArticle - and retrieve a non existing article', async function() {
         
         await ArticleService.create(article);
-        var nonExisting = await ArticleService.find(new mongoose.Types.ObjectId('111165797d3272395398efe7'));
+        const nonExisting = await ArticleService.find(new mongoose.Types.ObjectId('111165797d3272395398efe7'));
 
         expect(nonExisting).to.be.null;
     });
 
     it('UpdateArticle - validate updated article', async function() {
         
-        let created = await ArticleService.create(article);
-        let createdId: mongoose.Types.ObjectId = created._id;
+        const created = await ArticleService.create(article);
+        const createdId: mongoose.Types.ObjectId = created._id;
         article.title = "updated";
         article.author = "updated";
         article.body = "updated";
         await ArticleService.update(createdId.toString(), article);
-        let updated: any = await ArticleService.find(createdId); 
+        const updated: any = await ArticleService.find(createdId); 
 
         expect(article.title).to.be.equals(updated.title);
         expect(article.author).to.be.equals(updated.author);
@@ -87,7 +87,7 @@ describe('ArticleService', () => {
         await ArticleService.create(article);
         await ArticleService.delete(articleId);
 
-        var nonExisting = await ArticleService.find(articleId);
+        const nonExisting = await ArticleService.find(articleId);
 
         expect(nonExisting).to.be.null;
     });

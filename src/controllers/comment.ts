@@ -11,7 +11,7 @@ class CommentController{
                 return res.status(400).json('article is not valid');
             }
 
-            var result = await CommentService.findByArticleId(new Types.ObjectId(req.params.article));
+            const result = await CommentService.findByArticleId(new Types.ObjectId(req.params.article));
             if(!result || result.length == 0){
                 return res.status(404).json('Related comments not found');
             }
@@ -28,7 +28,7 @@ class CommentController{
             if (!ControllerHelper.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
-            var result = await CommentService.find(new Types.ObjectId(req.params.id));
+            const result = await CommentService.find(new Types.ObjectId(req.params.id));
             if(!result){
                 return res.status(404).json('Comment not found');
             }

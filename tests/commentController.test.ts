@@ -14,13 +14,13 @@ describe('CommentController', () => {
     });    
     
     it('GetComment - Of non existing article', async function() {
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         req._setParameter('article','123165797d3272395398efe7')
         sinon.stub(CommentService, 'findByArticleId').resolves([]);
-        var spySend = sinon.spy(res, 'json');
+        const spySend = sinon.spy(res, 'json');
 
         await CommentController.fetch(req, res, next);
 
@@ -34,17 +34,17 @@ describe('CommentController', () => {
             body: 'body',
             articleId: new mongoose.Types.ObjectId('123165797d3272395398efe7')
         };
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         req._setParameter('article','123165797d3272395398efe7')
         sinon.stub(CommentService, 'findByArticleId').resolves([<any>comment]);
-        var spySend = sinon.spy(res, 'json');
+        const spySend = sinon.spy(res, 'json');
         
         await CommentController.fetch(req, res, next);
         
-        var body = res._getJSONData();
+        const body = res._getJSONData();
         expect(spySend.calledWith([comment])).to.be.true;
         expect(body.length).to.be.equals(1);
         
@@ -52,9 +52,9 @@ describe('CommentController', () => {
 
     it('GetComment - bad request', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         req._setParameter('article','sdf')
         CommentController.find(req, res, next);
@@ -64,13 +64,13 @@ describe('CommentController', () => {
     
     it('GetComment - not found', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         req._setParameter('id','123165797d3272395398efe7')
         
         sinon.stub(CommentService, 'find').resolves(null);        
-        var spySend = sinon.spy(res, 'json');
+        const spySend = sinon.spy(res, 'json');
     
         await CommentController.find(req, res, next);
     
@@ -80,9 +80,9 @@ describe('CommentController', () => {
     
     it('UpdateComment - OK', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         const comment = <IComment>{
             author: 'author',
@@ -93,11 +93,11 @@ describe('CommentController', () => {
         req._setParameter('id','123165797d32723953989999');
         req._addBody("comment", comment);
         sinon.stub(CommentService, 'update').resolves(<any>comment);
-        var spyJson = sinon.spy(res, 'json');
+        const spyJson = sinon.spy(res, 'json');
         
         await CommentController.update(req, res, next);
         
-        var body = res._getJSONData();
+        const body = res._getJSONData();
 
         expect(spyJson.calledWith(comment)).to.be.true;
         expect(JSON.stringify(body)).to.be.equals(JSON.stringify(comment));
@@ -106,9 +106,9 @@ describe('CommentController', () => {
 
     it('UpdateComment - bad request', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         const comment = <IComment>{
             author: 'author',
@@ -127,9 +127,9 @@ describe('CommentController', () => {
 
     it('DeleteComment - OK', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         const comment = <IComment>{
             author: 'author',
@@ -140,11 +140,11 @@ describe('CommentController', () => {
         req._setParameter('id','123165797d32723953989999');
         req._addBody("comment", comment);
         sinon.stub(CommentService, 'delete').resolves(<any>comment);
-        var spyJson = sinon.spy(res, 'json');
+        const spyJson = sinon.spy(res, 'json');
         
         await CommentController.delete(req, res, next);
         
-        var body = res._getJSONData();
+        const body = res._getJSONData();
 
         expect(spyJson.calledWith(comment)).to.be.true;
         expect(JSON.stringify(body)).to.be.equals(JSON.stringify(comment));
@@ -153,9 +153,9 @@ describe('CommentController', () => {
 
     it('DeleteComment - bad request', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         const comment = <IComment>{
             author: 'author',
@@ -174,9 +174,9 @@ describe('CommentController', () => {
 
     it('CreateComment - OK', async function() {
         
-        var req = mocks.createRequest();
-        var res = mocks.createResponse();
-        var next = () => {};
+        const req = mocks.createRequest();
+        const res = mocks.createResponse();
+        const next = () => {};
         
         const comment = <IComment>{
             author: 'author',
@@ -187,11 +187,11 @@ describe('CommentController', () => {
         req._setParameter('id','123165797d32723953989999')
         req._addBody("comment", comment);
         sinon.stub(CommentService, 'create').resolves(<any>comment);
-        var spyJson = sinon.spy(res, 'json');
+        const spyJson = sinon.spy(res, 'json');
         
         await CommentController.create(req, res, next);
         
-        var body = res._getJSONData();
+        const body = res._getJSONData();
 
         expect(spyJson.calledWith(comment)).to.be.true;
         expect(res.statusCode).to.equal(201);
