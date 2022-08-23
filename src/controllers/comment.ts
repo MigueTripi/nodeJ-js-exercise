@@ -1,13 +1,13 @@
 import {Types} from 'mongoose';
 import CommentService from '../services/comment';
-import ControllerHelper from './helper/controllerHelper';
+import ControllerBase from './base';
 import { Request, Response } from "express";
 
-class CommentController{
+class CommentController extends ControllerBase {
     
     static async fetch(req: Request, res: Response, next: Function){
         try {
-            if (!ControllerHelper.isValidId(req.params.article)){
+            if (!this.isValidId(req.params.article)){
                 return res.status(400).json('article is not valid');
             }
 
@@ -25,7 +25,7 @@ class CommentController{
 
     static async find(req: Request, res: Response, next: Function){
         try {
-            if (!ControllerHelper.isValidId(req.params.id)){
+            if (!this.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
             const result = await CommentService.find(new Types.ObjectId(req.params.id));
@@ -43,7 +43,7 @@ class CommentController{
 
     static async update(req: Request, res: Response, next: Function){
         try {
-            if (!ControllerHelper.isValidId(req.params.id)){
+            if (!this.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
             res.json(await CommentService.update(new Types.ObjectId(req.params.id), req.body.comment));
@@ -56,7 +56,7 @@ class CommentController{
 
     static async create(req: Request, res: Response, next: Function){
         try {
-            if (!ControllerHelper.isValidId(req.body.comment.articleId)){
+            if (!this.isValidId(req.body.comment.articleId)){
                 return res.status(400).json('id is not valid');
             }
             res.status(201).json(await CommentService.create(req.body.comment));
@@ -69,7 +69,7 @@ class CommentController{
 
     static async delete(req: Request, res: Response, next: Function){
         try {
-            if (!ControllerHelper.isValidId(req.params.id)){
+            if (!this.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
             res.json(await CommentService.delete(new Types.ObjectId(req.params.id)));

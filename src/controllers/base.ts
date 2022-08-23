@@ -1,10 +1,10 @@
 import {Types} from 'mongoose';
 
-class ControllerHelper {
+class ControllerBase {
     
     static isValidId(id: string) {
         return Types.ObjectId.isValid(id);
     }
 }
 
-export default ControllerHelper;
+export default ControllerBase;

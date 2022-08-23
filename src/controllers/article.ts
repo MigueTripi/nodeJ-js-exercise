@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import ArticleService from '../services/article';
-import ControllerHelper from './helper/controllerHelper';
+import ControllerBase from './base';
 import { Request, Response } from "express";
 
-class ArticleController {
+class ArticleController extends ControllerBase {
     
     static async fetch(req: Request, res: Response, next: Function){
         try {
@@ -17,7 +17,7 @@ class ArticleController {
     static async find(req: Request, res: Response, next: Function){
         try {
             debugger;
-            if (!ControllerHelper.isValidId(req.params.id)){
+            if (!this.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
             const result = await ArticleService.find(new mongoose.Types.ObjectId(req.params.id));
@@ -35,7 +35,7 @@ class ArticleController {
 
     static async update(req: Request, res: Response, next: Function){
         try {
-            if (!ControllerHelper.isValidId(req.params.id)){
+            if (!this.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
             res.json(await ArticleService.update(req.params.id, req.body.article));
@@ -52,7 +52,7 @@ class ArticleController {
 
     static async delete(req: Request, res: Response, next: Function){
         try {
-            if (!ControllerHelper.isValidId(req.params.id)){
+            if (!this.isValidId(req.params.id)){
                 return res.status(400).json('id is not valid');
             }
             res.json(await ArticleService.delete(new mongoose.Types.ObjectId(req.params.id)));            
