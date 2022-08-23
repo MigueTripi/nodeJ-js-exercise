@@ -1,11 +1,11 @@
-const express = require('express');
-const Routes = require('./routes');
-const mongoose = require('mongoose');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
+import express from 'express';
+import Routes from './routes';
+import mongoose from 'mongoose';
+import logger from 'morgan';
+import bodyParser from 'body-parser';
 
 const app = express();
-app.use(logger());
+app.use(logger('dev'));
 app.use(bodyParser.json());
 Routes.configure(app);
 

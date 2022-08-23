@@ -1,8 +1,19 @@
 # nodeJ-js-exercise
 
+
 #Challenge
 
 #Desarrollar una API sin autenticación que permita hacer un CRUD de la entidad `Article`, con la siguiente spec:
+
+Default branch: Main
+Run local server:
+npm run start
+
+Run tests:
+npm run test.
+
+Create MongoDB container in docker:
+docker run --name mongodb -d -p 27017:27017 mongo
 
 GET /api/articles
 Retorna un array de `articles` con todos los Article almacenados en MongoDB.
